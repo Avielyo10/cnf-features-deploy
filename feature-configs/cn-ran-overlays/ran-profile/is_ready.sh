@@ -3,7 +3,7 @@
 WORKER_NODES=$(oc get nodes -l "node-role.kubernetes.io/worker-cnf" -o name)
 
 # Ensure numVfs is 4. If not, something is amiss
-for node in ${WORKER_NODES/node/sriovnetworknodestate}
+for node in ${WORKER_NODES//node/sriovnetworknodestate}
 do
   [[ $(oc -n openshift-sriov-network-operator get ${node} -o json \
   | jq -r '.spec.interfaces[].numVfs | select(. != null)') -eq 4 ]] && \
